@@ -1,45 +1,50 @@
-function downloadVideo() {
-    const url = document.getElementById("url").value.trim();
+const BACKEND_URL = "https://yruvpad-backend-production.up.railway.app";
+
+async function downloadVideo() {
+    const url = document.getElementById("url").value;
     const resolution = document.getElementById("resolution").value;
     const status = document.getElementById("status");
 
     if (!url) {
-        status.innerText = "❌ Please enter a YouTube URL";
+        status.innerHTML = "❌ Please enter a YouTube URL";
         return;
     }
 
-    status.innerText = "⏳ Downloading… Please wait";
+    status.innerHTML = "⏳ Downloading... Please wait";
 
-    fetch("https://yruvpad-backend-production.up.railway.app/download", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            url: url,
-            resolution: resolution
-        })
-    })
-    .then(response => {
+    try {
+        const response = await fetch(`${BACKEND_URL}/download`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                url: url,
+                resolution: resolution
+            })
+        });
+
         if (!response.ok) {
-            throw new Error("Download failed");
+            const err = await response.json();
+            throw new Error(err.error || "Download failed");
         }
-        return response.blob();
-    })
-    .then(blob => {
+
+        const blob = await response.blob();
         const downloadUrl = window.URL.createObjectURL(blob);
+
         const a = document.createElement("a");
         a.href = downloadUrl;
         a.download = "video.mp4";
         document.body.appendChild(a);
         a.click();
+
         a.remove();
         window.URL.revokeObjectURL(downloadUrl);
 
-        status.innerText = "✅ Download started";
-    })
-    .catch(error => {
+        status.innerHTML = "✅ Download started";
+
+    } catch (error) {
         console.error(error);
-        status.innerText = "❌ Error downloading video";
-    });
+        status.innerHTML = "❌ Error downloading video";
+    }
 }

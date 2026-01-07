@@ -10,12 +10,7 @@
         <div class="card">
             <h1>You<span>Tube</span> Video <span>Downloader</span></h1>
 
-            <input 
-                type="text" 
-                id="url" 
-                placeholder="Paste YouTube URL" 
-                required
-            >
+            <input type="text" id="url" placeholder="Paste YouTube URL" required>
 
             <select id="resolution">
                 <option value="144p">144p</option>
@@ -26,12 +21,12 @@
                 <option value="1080p">1080p</option>
                 <option value="2k">2K (1440p)</option>
                 <option value="4k">4K (2160p)</option>
-                <option value="8k" selected>8K (4320p)</option>
+                <option value="8k">8K (4320p)</option>
             </select>
 
             <button onclick="downloadVideo()">Download</button>
 
-            <p id="status" style="margin-top:15px;"></p>
+            <p id="status"></p>
         </div>
     </div>
 
