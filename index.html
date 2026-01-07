@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>YouTube Downloader</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>YouTube Downloader</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="overlay">
-        <div class="card">
-            <h1>You<span>Tube</span> Video <span>Downloader</span></h1>
+  <div class="overlay">
+    <div class="card">
+      <h1>You<span>Tube</span> Video <span>Downloader</span></h1>
 
-            <input type="text" id="url" placeholder="Paste YouTube URL" required>
+      <input id="url" type="text" placeholder="Paste YouTube URL" required>
 
-            <select id="resolution">
-                <option value="144p">144p</option>
-                <option value="240p">240p</option>
-                <option value="360p">360p</option>
-                <option value="480p">480p</option>
-                <option value="720p">720p</option>
-                <option value="1080p">1080p</option>
-                <option value="2k">2K (1440p)</option>
-                <option value="4k">4K (2160p)</option>
-                <option value="8k">8K (4320p)</option>
-            </select>
+      <select id="resolution">
+        <option value="144p">144p</option>
+        <option value="240p">240p</option>
+        <option value="360p">360p</option>
+        <option value="480p">480p</option>
+        <option value="720p">720p</option>
+        <option value="1080p">1080p</option>
+        <option value="2k">2K (1440p)</option>
+        <option value="4k">4K (2160p)</option>
+        <option value="8k">8K (4320p)</option>
+      </select>
 
-            <button onclick="downloadVideo()">Download</button>
+      <button id="downloadBtn">Download</button>
 
-            <p id="status"></p>
-        </div>
+      <p id="status" style="margin-top:10px;"></p>
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

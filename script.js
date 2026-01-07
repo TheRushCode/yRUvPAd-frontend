@@ -1,50 +1,45 @@
-const BACKEND_URL = "https://yruvpad-backend-production.up.railway.app";
+const btn = document.getElementById("downloadBtn");
+const statusText = document.getElementById("status");
 
-async function downloadVideo() {
-    const url = document.getElementById("url").value;
-    const resolution = document.getElementById("resolution").value;
-    const status = document.getElementById("status");
+btn.addEventListener("click", async () => {
+  const url = document.getElementById("url").value.trim();
+  const resolution = document.getElementById("resolution").value;
 
-    if (!url) {
-        status.innerHTML = "❌ Please enter a YouTube URL";
-        return;
+  if (!url) {
+    statusText.innerText = "❌ Please enter a YouTube URL";
+    return;
+  }
+
+  statusText.innerText = "⏳ Downloading...";
+
+  try {
+    const response = await fetch(
+      "https://yruvpad-backend-production.up.railway.app/download",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url, resolution })
+      }
+    );
+
+    if (!response.ok) {
+      const err = await response.json();
+      statusText.innerText = "❌ " + (err.error || "Download failed");
+      return;
     }
 
-    status.innerHTML = "⏳ Downloading... Please wait";
+    const blob = await response.blob();
+    const a = document.createElement("a");
+    a.href = window.URL.createObjectURL(blob);
+    a.download = "video.mp4";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
 
-    try {
-        const response = await fetch(`${BACKEND_URL}/download`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                url: url,
-                resolution: resolution
-            })
-        });
+    statusText.innerText = "✅ Download started";
 
-        if (!response.ok) {
-            const err = await response.json();
-            throw new Error(err.error || "Download failed");
-        }
-
-        const blob = await response.blob();
-        const downloadUrl = window.URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = downloadUrl;
-        a.download = "video.mp4";
-        document.body.appendChild(a);
-        a.click();
-
-        a.remove();
-        window.URL.revokeObjectURL(downloadUrl);
-
-        status.innerHTML = "✅ Download started";
-
-    } catch (error) {
-        console.error(error);
-        status.innerHTML = "❌ Error downloading video";
-    }
-}
+  } catch (e) {
+    statusText.innerText = "❌ Server error";
+    console.error(e);
+  }
+});
