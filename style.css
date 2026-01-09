@@ -115,3 +115,25 @@ button:hover {
   text-decoration: underline;
   opacity: 1;
 }
+
+
+
+
+
+/* === FIX: Make input & select EXACT same size (no design change) === */
+input[type="text"],
+select {
+    height: 52px;               /* same height */
+    padding: 0 14px;            /* remove vertical padding difference */
+    line-height: 52px;          /* vertical centering */
+    box-sizing: border-box;
+}
+
+/* normalize select rendering */
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+
