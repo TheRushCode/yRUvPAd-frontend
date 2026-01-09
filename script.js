@@ -43,3 +43,10 @@ btn.addEventListener("click", async () => {
     console.error(e);
   }
 });
+
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+
+
