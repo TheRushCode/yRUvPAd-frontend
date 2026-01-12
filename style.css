@@ -138,3 +138,19 @@ select {
 }
 
 
+@media (max-width: 600px) {
+  .card {
+    width: 90%;
+    padding: 24px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  button {
+    font-size: 0.95em;
+  }
+}
+
+
